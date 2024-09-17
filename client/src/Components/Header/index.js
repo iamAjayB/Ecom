@@ -90,7 +90,7 @@ const Header = () => {
 
     return (
         <>
-            <div className='headerWrapperFixed' ref={headerRef}>
+            <div className='headerWrapperFixed' ref={headerRef} style={{position:'fixed',top:0}}>
                 <div className="headerWrapper">
                     {/* <div className="top-strip bg-blue">
                         <div className="container">
