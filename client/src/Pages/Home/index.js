@@ -322,6 +322,10 @@ const Home = () => {
             </div>
           </div>
       </section>
+{/*       <div>
+      <BottomNav/>
+      </div>
+ */}
     </>
   );
 };
