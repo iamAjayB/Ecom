@@ -22,9 +22,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import homeBannerPlaceholder from "../../assets/images/homeBannerPlaceholder.jpg";
 import Banners from "../../Components/banners";
-import BannerSection from "../../Components/card/banaer";
-//import BottomNav from "../../Components/bottomnav/bottomnav"
-
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -212,14 +209,9 @@ const Home = () => {
               </div>
 
               {bannerList?.length !== 0 && <Banners data={bannerList} col={3}/>}
-            </div>
-            </div>
-            <div>
-               <div className="col-md-12 mb-5">
-              <BannerSection />
-              </div>
-            </div>
-            <div>
+
+            
+
               <div className="d-flex align-items-center mt-4">
                 <div className="info w-75">
                   <h3 className="mb-0 hd">NEW PRODUCTS</h3>
@@ -321,6 +313,7 @@ const Home = () => {
               </div>
             </div>
           </div>
+        </div>
       </section>
     </>
   );
