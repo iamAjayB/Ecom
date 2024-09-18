@@ -67,30 +67,77 @@ router.post(`/upload`, upload.array("images"), async (req, res) => {
   }
 });
 
+// router.get(`/`, async (req, res) => {
+//   const page = parseInt(req.query.page) || 1;
+//   const perPage = parseInt(req.query.perPage);
+//   const totalPosts = await Product.countDocuments();
+//   const totalPages = Math.ceil(totalPosts / perPage);
+
+//   if (page > totalPages) {
+//     return res.status(404).json({ message: "Page not found" });
+//   }
+
+//   let productList = [];
+
+//   productList = await Product.find({ location: req.query.location })
+//     .populate("category")
+//     .skip((page - 1) * perPage)
+//     .limit(perPage)
+//     .exec();
+
+//   return res.status(200).json({
+//     products: productList,
+//     totalPages: totalPages,
+//     page: page,
+//   });
+// });
+
 router.get(`/`, async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const perPage = parseInt(req.query.perPage);
-  const totalPosts = await Product.countDocuments();
-  const totalPages = Math.ceil(totalPosts / perPage);
+  try {
+    console.log("Received request with query:", req.query);
+    
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.perPage) || 10;
+    const location = req.query.location;
 
-  if (page > totalPages) {
-    return res.status(404).json({ message: "Page not found" });
+    console.log(`Page: ${page}, PerPage: ${perPage}, Location: ${location}`);
+
+    const totalPosts = await Product.countDocuments();
+    console.log(`Total posts: ${totalPosts}`);
+
+    const totalPages = Math.ceil(totalPosts / perPage);
+
+    if (page > totalPages) {
+      return res.status(404).json({ message: "Page not found" });
+    }
+
+    let query = {};
+    if (location) {
+      query.location = location;
+    }
+
+    console.log("Mongoose query:", query);
+
+    const productList = await Product.find(query)
+      .populate("category")
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .lean()
+      .exec();
+
+    console.log(`Found ${productList.length} products`);
+
+    return res.status(200).json({
+      products: productList,
+      totalPages: totalPages,
+      page: page,
+    });
+  } catch (error) {
+    console.error("Error in /api/products:", error);
+    return res.status(500).json({ message: "Internal server error", error: error.message });
   }
-
-  let productList = [];
-
-  productList = await Product.find({ location: req.query.location })
-    .populate("category")
-    .skip((page - 1) * perPage)
-    .limit(perPage)
-    .exec();
-
-  return res.status(200).json({
-    products: productList,
-    totalPages: totalPages,
-    page: page,
-  });
 });
+
 
 router.get(`/catName`, async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -441,7 +488,7 @@ router.post(`/create`, async (req, res) => {
     });
   });
 
-  product = new Product({
+  Product = new Product({
     name: req.body.name,
     description: req.body.description,
     images: images_Array,
@@ -464,9 +511,9 @@ router.post(`/create`, async (req, res) => {
     location: req.body.location !== "" ? req.body.location : "All",
   });
 
-  product = await product.save();
+  Product = await Product.save();
 
-  if (!product) {
+  if (!Product) {
     res.status(500).json({
       error: err,
       success: false,

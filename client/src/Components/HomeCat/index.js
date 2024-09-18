@@ -38,9 +38,6 @@ const HomeCat = (props) => {
                         }
                       }}
                 >
-
-
-
                     {
                         props.catData?.length !== 0 && props.catData?.map((cat, index) => {
                             return (
