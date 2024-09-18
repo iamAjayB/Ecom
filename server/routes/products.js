@@ -511,9 +511,9 @@ router.post(`/create`, async (req, res) => {
     location: req.body.location !== "" ? req.body.location : "All",
   });
 
-  Product = await product.save();
+  product = await product.save();
 
-  if (!Product) {
+  if (!product) {
     res.status(500).json({
       error: err,
       success: false,
