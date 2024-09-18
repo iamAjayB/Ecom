@@ -488,7 +488,7 @@ router.post(`/create`, async (req, res) => {
     });
   });
 
-  Product = new Product({
+  product = new Product({
     name: req.body.name,
     description: req.body.description,
     images: images_Array,
@@ -511,7 +511,7 @@ router.post(`/create`, async (req, res) => {
     location: req.body.location !== "" ? req.body.location : "All",
   });
 
-  Product = await Product.save();
+  Product = await product.save();
 
   if (!Product) {
     res.status(500).json({
