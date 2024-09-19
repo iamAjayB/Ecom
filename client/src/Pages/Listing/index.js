@@ -42,19 +42,16 @@ const Listing = () => {
     let apiEndPoint = "";
 
     if (url.includes("subCat")) {
-      apiEndPoint = `/api/products/subCatId?subCatId=${id}&location=${localStorage.getItem(
-        "location"
-      )}`;
+      apiEndPoint = `/api/products/subCatId?subCatId=${id}&location=${localStorage.getItem("location")}`;
     }
     if (url.includes("category")) {
-      apiEndPoint = `/api/products/catId?catId=${id}&location=${localStorage.getItem(
-        "location"
-      )}`;
+      apiEndPoint = `/api/products/catId?catId=${id}&location=${localStorage.getItem("location")}`;
     }
-
+    console.log(apiEndPoint)
     setisLoading(true);
     fetchDataFromApi(`${apiEndPoint}`).then((res) => {
       setProductData(res);
+      console.log(res)
       setisLoading(false);
     });
   }, [id]);
