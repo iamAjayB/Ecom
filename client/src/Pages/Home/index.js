@@ -208,7 +208,7 @@ const Home = () => {
             </div>
             <div>
               <div className="d-flex align-items-center mt-4">
-                <div className="info w-75">
+                <div className="info w-100 text-center">
                   <h3 className="mb-0 hd">NEW PRODUCTS</h3>
                   <p className="text-light text-sml mb-0">
                     New products with updated stocks.
@@ -234,14 +234,14 @@ const Home = () => {
                     })}
               </div>
 
-              <div className="d-flex align-items-center mt-4">
-                <div className="info">
-                  <h3 className="mb-0 hd">featured products</h3>
-                  <p className="text-light text-sml mb-0">
-                    Do not miss the current offers until the end of March.
-                  </p>
-                </div>
-              </div>
+  <div className="d-flex align-items-center mt-4" style={{ justifyContent: 'center'}}>
+    <div className="info text-center">
+        <h3 className="mb-0 hd text-center" >Featured Products</h3>
+        <p className="text-light text-sml mb-0">
+            Do not miss the current offers until the end of March.
+        </p>
+    </div>
+</div>
 
 
               {featuredProducts?.length === 0 && (

@@ -18,6 +18,8 @@ import Checkout from "./Pages/Checkout";
 import Orders from "./Pages/Orders";
 import MyAccount from "./Pages/MyAccount";
 import SearchPage from "./Pages/Search";
+import BottomNav from "./Components/bottomnav/bottomnav";
+
 
 import { fetchDataFromApi, postData } from "./utils/api";
 import Snackbar from "@mui/material/Snackbar";
@@ -30,6 +32,7 @@ function App() {
   const [selectedCountry, setselectedCountry] = useState("");
   const [isOpenProductModal, setisOpenProductModal] = useState(false);
   const [isHeaderFooterShow, setisHeaderFooterShow] = useState(true);
+
   const [isLogin, setIsLogin] = useState(false);
   const [productData, setProductData] = useState([]);
 
@@ -217,7 +220,7 @@ function App() {
     windowWidth,
     isOpenNav,
     setIsOpenNav,
-  };
+};
 
   return (
     <BrowserRouter>
@@ -267,6 +270,7 @@ function App() {
           <Route exact={true} path="/my-account" element={<MyAccount />} />
           <Route exact={true} path="/search" element={<SearchPage />} />
         </Routes>
+        {<BottomNav />}
         {isHeaderFooterShow === true && <Footer />}
 
         {isOpenProductModal === true && <ProductModal data={productData} />}
