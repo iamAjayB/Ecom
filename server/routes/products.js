@@ -152,49 +152,83 @@ router.get(`/catName`, async (req, res) => {
     return res.status(500).json({ success: false, error: error.message });
   }
 });
-
-
-router.get(`/catId`, async (req, res) => {
+router.get('/catId', async (req, res) => {
   const page = parseInt(req.query.page) || 1;
-  const perPage = parseInt(req.query.perPage);
-  const totalPosts = await Product.countDocuments();
+  const perPage = parseInt(req.query.perPage) || 10; // default perPage value
+  const location = req.query.location;
+  const catId = req.query.catId;
+
+  if (isNaN(page) || isNaN(perPage) || !location || !catId) {
+    return res.status(400).json({ message: 'Invalid request' });
+  }
+
+  const totalPosts = await Product.countDocuments({ location, catId });
   const totalPages = Math.ceil(totalPosts / perPage);
 
   if (page > totalPages) {
-    return res.status(404).json({ message: "Page not found" });
+    return res.status(404).json({ message: 'Page not found' });
   }
 
   let productList = [];
 
-
-  if (req.query.page !== "" && req.query.perPage !== "") {
-    productList = await Product.find({
-      location: req.query.location,
-      catId: req.query.catId,
-    })
-      .populate("category")
+  if (page && perPage) {
+    productList = await Product.find({ location, catId })
+      .populate('category')
       .skip((page - 1) * perPage)
       .limit(perPage)
       .exec();
-  
-    return res.status(200).json({
-      products: productList,
-      totalPages: totalPages,
-      page: page,
-    });
+  } else {
+    productList = await Product.find({ location, catId });
   }
-else{
-  productList = await Product.find({
-    location: req.query.location,
-    catId: req.query.catId,
-  })
 
   return res.status(200).json({
     products: productList,
+    totalPages: totalPages,
+    page: page,
   });
-}
-
 });
+
+// router.get(`/catId`, async (req, res) => {
+//   const page = parseInt(req.query.page) || 1;
+//   const perPage = parseInt(req.query.perPage);
+//   const totalPosts = await Product.countDocuments();
+//   const totalPages = Math.ceil(totalPosts / perPage);
+
+//   if (page > totalPages) {
+//     return res.status(404).json({ message: "Page not found" });
+//   }
+
+//   let productList = [];
+
+
+//   if (req.query.page !== "" && req.query.perPage !== "") {
+//     productList = await Product.find({
+//       location: req.query.location,
+//       catId: req.query.catId,
+//     })
+//       .populate("category")
+//       .skip((page - 1) * perPage)
+//       .limit(perPage)
+//       .exec();
+  
+//     return res.status(200).json({
+//       products: productList,
+//       totalPages: totalPages,
+//       page: page,
+//     });
+//   }
+// else{
+//   productList = await Product.find({
+//     location: req.query.location,
+//     catId: req.query.catId,
+//   })
+
+//   return res.status(200).json({
+//     products: productList,
+//   });
+// }
+
+// });
 
 router.get(`/subCatId`, async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -501,18 +535,7 @@ router.post(`/create`, async (req, res) => {
   res.status(201).json(product);
 });
 
-router.get("/:id", async (req, res) => {
-  productEditId = req.params.id;
 
-  const product = await Product.findById(req.params.id).populate("category");
-
-  if (!product) {
-    res
-      .status(500)
-      .json({ message: "The product with the given ID was not found." });
-  }
-  return res.status(200).send(product);
-});
 
 router.delete("/deleteImage", async (req, res) => {
   const imgUrl = req.query.img;
@@ -630,45 +653,45 @@ router.put("/:id", async (req, res) => {
 
 
 // GET /api/products
-router.get(`/v1`, async (req, res) => {
-  try {
-    const page = parseInt(req.query.page) || 1;
-    const perPage = parseInt(req.query.perPage) || 12;
-    const location = req.query.location || 'All';
+// router.get(`/v1`, async (req, res) => {
+//   try {
+//     const page = parseInt(req.query.page) || 1;
+//     const perPage = parseInt(req.query.perPage) || 12;
+//     const location = req.query.location || 'All';
 
-    let query = {};
-    if (location !== 'All') {
-      query.location = location;
-    }
+//     let query = {};
+//     if (location !== 'All') {
+//       query.location = location;
+//     }
 
-    const totalProducts = await Product.countDocuments(query);
-    const totalPages = Math.ceil(totalProducts / perPage);
+//     const totalProducts = await Product.countDocuments(query);
+//     const totalPages = Math.ceil(totalProducts / perPage);
 
-    if (page > totalPages) {
-      return res.status(404).json({ message: "Page not found" });
-    }
+//     if (page > totalPages) {
+//       return res.status(404).json({ message: "Page not found" });
+//     }
 
-    const productList = await Product.find(query)
-      .populate("category")
-      .skip((page - 1) * perPage)
-      .limit(perPage)
-      .exec();
+//     const productList = await Product.find(query)
+//       .populate("category")
+//       .skip((page - 1) * perPage)
+//       .limit(perPage)
+//       .exec();
 
-    if (!productList) {
-      return res.status(500).json({ success: false });
-    }
+//     if (!productList) {
+//       return res.status(500).json({ success: false });
+//     }
 
-    return res.status(200).json({
-      products: productList,
-      totalPages: totalPages,
-      page: page,
-      totalProducts: totalProducts
-    });
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    return res.status(500).json({ success: false, error: error.message });
-  }
-});
+//     return res.status(200).json({
+//       products: productList,
+//       totalPages: totalPages,
+//       page: page,
+//       totalProducts: totalProducts
+//     });
+//   } catch (error) {
+//     console.error("Error fetching products:", error);
+//     return res.status(500).json({ success: false, error: error.message });
+//   }
+// });
 
 
 router.get(`/`, async (req, res) => {
