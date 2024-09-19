@@ -71,7 +71,7 @@ const Header = () => {
     });
 
     setTimeout(() => {
-      history("/login");
+      history("/");
     }, 2000);
   };
 
@@ -115,7 +115,7 @@ const Header = () => {
                 )}
               </Button>
 
-              <div className="dropdownWrapper position-relative">
+              {/* <div className="dropdownWrapper position-relative">
                 <Button
                   className="rounded-circle mr-3"
                   onClick={handleOpenotificationsDrop}
@@ -294,11 +294,11 @@ const Header = () => {
                     </Button>
                   </div>
                 </Menu>
-              </div>
+              </div> */}
 
               {context.isLogin !== true ? (
                 <Link to={"/login"}>
-                  <Button className="btn-blue btn-lg btn-round">Sign In</Button>
+                  {/* <Button className="btn-blue btn-lg btn-round">Sign In</Button> */}
                 </Link>
               ) : (
                 <div className="myAccWrapper">
