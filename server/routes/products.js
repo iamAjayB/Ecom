@@ -68,44 +68,91 @@ router.post(`/upload`, upload.array("images"), async (req, res) => {
 });
 
 
+// router.get(`/catName`, async (req, res) => {
+//   const page = parseInt(req.query.page) || 1;
+//   const perPage = parseInt(req.query.perPage);
+//   const totalPosts = await Product.countDocuments();
+//   const totalPages = Math.ceil(totalPosts / perPage);
+
+//   if (page > totalPages) {
+//     return res.status(404).json({ message: "Page not found" });
+//   }
+
+//   let productList = [];
+
+//   if (req.query.page !== "" && req.query.perPage !== "") {
+//     productList = await Product.find({
+//       location: req.query.location,
+//       catName: req.query.catName,
+//     })
+//       .populate("category")
+//       .skip((page - 1) * perPage)
+//       .limit(perPage)
+//       .exec();
+
+//     return res.status(200).json({
+//       products: productList,
+//       totalPages: totalPages,
+//       page: page,
+//     });
+//   } else {
+//     productList = await Product.find({
+//       location: req.query.location,
+//       catName: req.query.catName,
+//     });
+
+//     return res.status(200).json({
+//       products: productList,
+//     });
+//   }
+// });
+
+// GET /api/products/catName
 router.get(`/catName`, async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const perPage = parseInt(req.query.perPage);
-  const totalPosts = await Product.countDocuments();
-  const totalPages = Math.ceil(totalPosts / perPage);
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.perPage) || 12;
+    const location = req.query.location || 'All';
+    const catName = req.query.catName;
 
-  if (page > totalPages) {
-    return res.status(404).json({ message: "Page not found" });
-  }
+    if (!catName) {
+      return res.status(400).json({ message: "Category name is required" });
+    }
 
-  let productList = [];
+    let query = { catName: catName };
+    if (location !== 'All') {
+      query.location = location;
+    }
 
-  if (req.query.page !== "" && req.query.perPage !== "") {
-    productList = await Product.find({
-      location: req.query.location,
-      catName: req.query.catName,
-    })
+    const totalProducts = await Product.countDocuments(query);
+    const totalPages = Math.ceil(totalProducts / perPage);
+
+    if (page > totalPages) {
+      return res.status(404).json({ message: "Page not found" });
+    }
+
+    const productList = await Product.find(query)
       .populate("category")
       .skip((page - 1) * perPage)
       .limit(perPage)
       .exec();
 
+    if (!productList) {
+      return res.status(500).json({ success: false });
+    }
+
     return res.status(200).json({
       products: productList,
       totalPages: totalPages,
       page: page,
+      totalProducts: totalProducts
     });
-  } else {
-    productList = await Product.find({
-      location: req.query.location,
-      catName: req.query.catName,
-    });
-
-    return res.status(200).json({
-      products: productList,
-    });
+  } catch (error) {
+    console.error("Error fetching products by category:", error);
+    return res.status(500).json({ success: false, error: error.message });
   }
 });
+
 
 router.get(`/catId`, async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -580,6 +627,49 @@ router.put("/:id", async (req, res) => {
 
   //res.send(product);
 });
+
+
+// GET /api/products
+router.get(`/v1`, async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.perPage) || 12;
+    const location = req.query.location || 'All';
+
+    let query = {};
+    if (location !== 'All') {
+      query.location = location;
+    }
+
+    const totalProducts = await Product.countDocuments(query);
+    const totalPages = Math.ceil(totalProducts / perPage);
+
+    if (page > totalPages) {
+      return res.status(404).json({ message: "Page not found" });
+    }
+
+    const productList = await Product.find(query)
+      .populate("category")
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .exec();
+
+    if (!productList) {
+      return res.status(500).json({ success: false });
+    }
+
+    return res.status(200).json({
+      products: productList,
+      totalPages: totalPages,
+      page: page,
+      totalProducts: totalProducts
+    });
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 
 router.get(`/`, async (req, res) => {
   const page = parseInt(req.query.page) || 1;
