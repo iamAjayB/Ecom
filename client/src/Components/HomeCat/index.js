@@ -14,48 +14,60 @@ const HomeCat = (props) => {
     return (
         <section className="homeCat pb-2">
             <div className="container">
-                <h3 className="mb-3 hd">Featured Categories</h3>
+                <h3 className="mb-3 hd text-center mt">Featured Categories</h3>
                 <Swiper
-                    slidesPerView={8}
-                    spaceBetween={0}
-                    navigation={context.windowWidth>992 ? true : false}
-                    slidesPerGroup={context.windowWidth>992 ? 3 : 1}
-                    modules={[Navigation]}
-                    loop={false}
-                    className="mySwiper"
-                    breakpoints={{
-                        320: {
-                            slidesPerView: 3,
-                            spaceBetween: 10,
-                          },
-                        500: {
-                          slidesPerView: 5,
-                          spaceBetween: 10,
-                        },
-                        768: {
-                          slidesPerView: 8,
-                          spaceBetween: 10,
+                        slidesPerView={8}
+                        spaceBetween={0}
+                        navigation={context.windowWidth > 992 ? true : false}
+                        slidesPerGroup={context.windowWidth > 992 ? 3 : 1}
+                        modules={[Navigation]}
+                        loop={false}
+                        className="mySwiper"
+                        breakpoints={{
+                            320: {
+                                slidesPerView: 3,
+                                spaceBetween: 10,
+                            },
+                            500: {
+                                slidesPerView: 5,
+                                spaceBetween: 10,
+                            },
+                            768: {
+                                slidesPerView: 8,
+                                spaceBetween: 10,
+                            }
+                        }}
+                        onSwiper={(swiper) => {
+                            const updateJustifyContent = () => {
+                                if (window.innerWidth >= 767) {
+                                    swiper.wrapperEl.style.justifyContent = 'center'; // Apply inline style for widths >= 767px
+                                } else {
+                                    swiper.wrapperEl.style.removeProperty('justify-content'); // Remove the justify-content property for smaller screens
+                                }
+                            };
+
+                            // Call the function initially when Swiper is initialized
+                            updateJustifyContent();
+
+                            // Update justify-content dynamically when window is resized
+                            swiper.on('resize', updateJustifyContent);
+                        }}
+                    >
+                        {
+                            props.catData?.length !== 0 && props.catData?.map((cat, index) => {
+                                return (
+                                    <SwiperSlide key={index}>
+                                        <Link to={`/products/category/${cat._id}`}>
+                                            <div className="item text-center cursor" style={{ background: cat.color }}>
+                                                <img src={cat.images[0]} alt={cat.name} />
+                                            </div>
+                                            <h6>{cat.name}</h6>
+                                        </Link>
+                                    </SwiperSlide>
+                                );
+                            })
                         }
-                      }}
-                >
-                    {
-                        props.catData?.length !== 0 && props.catData?.map((cat, index) => {
-                            return (
-                                <SwiperSlide key={index}>
-                                    <Link to={`/products/category/${cat._id}`}>
-                                        <div className="item text-center cursor" style={{ background: cat.color }}>
-                                            <img src={cat.images[0]} />
-                                        </div>
-                                        <h6>{cat.name}</h6>
-                                    </Link>
-                                </SwiperSlide>
-                            )
-                        })
-                    }
-
-
-
-                </Swiper>
+                    </Swiper>
             </div>
         </section>
     )
