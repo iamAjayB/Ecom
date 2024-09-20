@@ -154,15 +154,7 @@ button {
   background: #fff;
 }
 
-.headerWrapperFixed {
-  background: #fff;
-  transition: all 0.3s ease-in-out;
-  position: fixed;
-  top: 34px;
-  left: 0px;
-  width: 100%;
-  z-index: 10000;
-}
+
 
 .headerWrapperFixed {
   background: #fff;
@@ -175,7 +167,7 @@ button {
 }
 
 .headerWrapperFixed.fixed {
-  top: -123px;
+  top: -80px;
   box-shadow: 0 1px 3px rgb(0 0 0 / 6%), 0 1px 2px rgb(0 0 0 / 12%);
 }
 
@@ -191,15 +183,7 @@ button {
   margin-top: 195px !important;
 }
 
-.headerWrapper .top-strip {
-  padding: 8px 0px;
-}
 
-.headerWrapper .top-strip p {
-  color: #fff;
-  font-size: 12px;
-  font-weight: 500;
-}
 
 .headerWrapper .header {
   width: 100%;
@@ -686,7 +670,7 @@ nav .navPart2 ul li:hover .submenu {
 
 /* .homeBannerSection .swiper .swiper-slide-active .item img{-webkit-animation: zooming 14s ease-in-out infinite alternate; animation: zooming 14s ease-in-out infinite alternate;} */
 .swiper-button-next {
-  right: 3% !important;
+  /* right: 3% !important;
   position: absolute;
   top: 45%;
   z-index: 100;
@@ -699,13 +683,15 @@ nav .navPart2 ul li:hover .submenu {
   border-radius: 100%;
   font-family: FontAwesome !important;
   font-weight: bold;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%) !important;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%) !important; */
+  display: none;
 }
 
 /* @-webkit-keyframes zooming{0%{-webkit-transform:scale(1)}100%{-webkit-transform:scale(1.2)}}@keyframes zooming{0%{transform:scale(1)}100%{transform:scale(1.2)}} */
 
 .swiper-button-prev {
-  left: 3% !important;
+  display: none;
+  /* left: 3% !important;
   position: absolute;
   top: 45%;
   z-index: 100;
@@ -718,21 +704,18 @@ nav .navPart2 ul li:hover .submenu {
   border-radius: 100%;
   font-family: FontAwesome !important;
   font-weight: bold;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%) !important;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%) !important; */
 }
 
 
 .swiper-button-prev:after,
 .swiper-button-next:after {
   color: #000 !important;
-  opacity: 0.8;
+  opacity: 0;
   font-size: 17px !important;
 }
 
-.swiper-button-prev:hover,
-.swiper-button-next:hover {
-  background: #e7e7e7 !important;
-}
+
 
 .homeBannerSection {
   cursor: pointer;
@@ -1082,9 +1065,11 @@ nav .navPart2 ul li:hover .submenu {
 
 .homeCat .swiper {
   overflow: inherit !important;
+  
 }
 
 .homeCat .swiper .item {
+ 
   padding: 0px;
   width: 120px;
   height: 120px;

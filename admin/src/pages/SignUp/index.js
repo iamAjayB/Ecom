@@ -136,7 +136,7 @@ const SignUp = () => {
                    
                     setTimeout(() => {
                         setIsLoading(true);
-                        history("/login");
+                        history("/");
                     }, 2000);
                 }
 

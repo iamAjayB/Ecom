@@ -37,7 +37,7 @@ const Sidebar = () => {
             setIsLogin(true);
         }
         else {
-            history("/login");
+            history("/");
         }
     }, []);
 
@@ -52,7 +52,7 @@ const Sidebar = () => {
         })
 
         setTimeout(() => {
-            history("/login");
+            history("/");
         }, 2000);
 
     }
@@ -161,14 +161,14 @@ const Sidebar = () => {
 
                 <br />
 
-                <div className='logoutWrapper'>
+                {/* <div className='logoutWrapper'>
                     <div className='logoutBox'>
                         <Button variant="contained" onClick={()=>{
                             logout(); 
                             context.setIsOpenNav(false)
                         }}><IoMdLogOut /> Logout</Button>
                     </div>
-                </div>
+                </div> */}
 
             </div>
         </>

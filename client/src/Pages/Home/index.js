@@ -10,16 +10,13 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import ProductItem from "../../Components/ProductItem";
 import HomeCat from "../../Components/HomeCat";
-
 import banner3 from "../../assets/images/banner3.jpg";
 import banner4 from "../../assets/images/banner4.jpg";
-
 import { MyContext } from "../../App";
 import { fetchDataFromApi } from "../../utils/api";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CircularProgress from "@mui/material/CircularProgress";
-
 import homeBannerPlaceholder from "../../assets/images/homeBannerPlaceholder.jpg";
 import Banners from "../../Components/banners";
 
@@ -63,6 +60,7 @@ const Home = () => {
         `/api/products?page=1&perPage=12&location=${location}`
       ).then((res) => {
         setProductsData(res);
+        console.log('res--',res)
       });
     }
 
@@ -78,6 +76,7 @@ const Home = () => {
   useEffect(() => {
     if (context.categoryData[0] !== undefined)
       setselectedCat(context.categoryData[0].name);
+
   }, [context.categoryData]);
 
   useEffect(() => {
@@ -99,7 +98,7 @@ const Home = () => {
       {homeSlides?.length !== 0 ? (
         <HomeBanner data={homeSlides} />
       ) : (
-        <div className="container mt-3">
+        <div className="container">
           <div className="homeBannerSection">
             <img src={homeBannerPlaceholder} className="w-100" />
           </div>
@@ -113,18 +112,6 @@ const Home = () => {
       <section className="homeProducts">
         <div className="container">
           <div className="row homeProductsRow">
-            {/* <div className="col-md-3">
-              <div className="sticky">
-                <div className="banner">
-                  <img src={banner1} className="cursor w-100" />
-                </div>
-
-                <div className="banner mt-4">
-                  <img src={banner2} className="cursor w-100" />
-                </div>
-              </div>
-            </div> */}
-
             <div className="col-md-12 productRow">
               <div className="d-flex align-items-center res-flex-column">
                 <div className="info" style={{ width: "35%" }}>
