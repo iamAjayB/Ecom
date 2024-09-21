@@ -12,11 +12,11 @@ const Sewslider = () => {
   const scrollTimeoutRef = useRef(null); // Reference to store timeout ID
   const autoSlideIntervalRef = useRef(null); // Reference for the auto-slide interval
 
- /*  const slideNext = () => {
+  const slideNext = () => {
     if (swiperRef.current) {
-      swiperRef.current.swiper.slidePrev();
+      swiperRef.current.swiper.slideNext();
     }
-  }; */
+  };
 
   const slidePrev = () => {
     if (swiperRef.current) {
@@ -34,6 +34,7 @@ const Sewslider = () => {
     }
 
     // Set a timeout to control how frequently slides change
+
     // Reset auto-slide interval
     resetAutoSlide();
   };
