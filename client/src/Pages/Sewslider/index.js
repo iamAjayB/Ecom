@@ -12,11 +12,11 @@ const Sewslider = () => {
   const scrollTimeoutRef = useRef(null); // Reference to store timeout ID
   const autoSlideIntervalRef = useRef(null); // Reference for the auto-slide interval
 
-  const slideNext = () => {
+ /*  const slideNext = () => {
     if (swiperRef.current) {
-      swiperRef.current.swiper.slideNext();
+      swiperRef.current.swiper.slidePrev();
     }
-  }; 
+  }; */
 
   const slidePrev = () => {
     if (swiperRef.current) {
@@ -43,7 +43,7 @@ const Sewslider = () => {
       clearInterval(autoSlideIntervalRef.current);
     }
     autoSlideIntervalRef.current = setInterval(() => {
-        slidePrev();
+      slideNext();
     }, 2000); // Resume auto-slide every 2 seconds
   };
 
@@ -63,7 +63,7 @@ const Sewslider = () => {
 
     // Start automatic sliding every 2 seconds
     autoSlideIntervalRef.current = setInterval(() => {
-        slidePrev();
+      slideNext();
     }, 2000); // Change slide every 2 seconds
 
     // Cleanup event listeners and intervals on component unmount
