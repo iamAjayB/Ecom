@@ -10,18 +10,18 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import ProductItem from "../../Components/ProductItem";
 import HomeCat from "../../Components/HomeCat";
+
 import banner3 from "../../assets/images/banner3.jpg";
 import banner4 from "../../assets/images/banner4.jpg";
+
 import { MyContext } from "../../App";
 import { fetchDataFromApi } from "../../utils/api";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CircularProgress from "@mui/material/CircularProgress";
+
 import homeBannerPlaceholder from "../../assets/images/homeBannerPlaceholder.jpg";
 import Banners from "../../Components/banners";
-import BannerSection from "../../Components/card/banaer";
-//import BottomNav from "../../Components/bottomnav/bottomnav"
-
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -33,8 +33,7 @@ const Home = () => {
   const [value, setValue] = React.useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [bannerList, setBannerList] = useState([]);
-
+ 
   const context = useContext(MyContext);
 
   const handleChange = (event, newValue) => {
@@ -63,7 +62,6 @@ const Home = () => {
         `/api/products?page=1&perPage=12&location=${location}`
       ).then((res) => {
         setProductsData(res);
-        console.log('res--',res)
       });
     }
 
@@ -71,15 +69,12 @@ const Home = () => {
       setHomeSlides(res);
     });
 
-    fetchDataFromApi("/api/banners").then((res) => {
-      setBannerList(res);
-    });
+  
   }, []);
 
   useEffect(() => {
     if (context.categoryData[0] !== undefined)
       setselectedCat(context.categoryData[0].name);
-
   }, [context.categoryData]);
 
   useEffect(() => {
@@ -115,6 +110,8 @@ const Home = () => {
       <section className="homeProducts">
         <div className="container">
           <div className="row homeProductsRow">
+            
+
             <div className="col-md-12 productRow">
               <div className="d-flex align-items-center res-flex-column">
                 <div className="info" style={{ width: "35%" }}>
@@ -198,17 +195,10 @@ const Home = () => {
                 )}
               </div>
 
-              {bannerList?.length !== 0 && <Banners data={bannerList} col={3}/>}
-            </div>
-            </div>
-            <div>
-               <div className="col-md-12 mb-5">
-              <BannerSection />
-              </div>
-            </div>
-            <div>
+             
+
               <div className="d-flex align-items-center mt-4">
-                <div className="info w-100 text-center">
+                <div className="info w-75">
                   <h3 className="mb-0 hd">NEW PRODUCTS</h3>
                   <p className="text-light text-sml mb-0">
                     New products with updated stocks.
@@ -234,14 +224,14 @@ const Home = () => {
                     })}
               </div>
 
-  <div className="d-flex align-items-center mt-4" style={{ justifyContent: 'center'}}>
-    <div className="info text-center">
-        <h3 className="mb-0 hd text-center" >Featured Products</h3>
-        <p className="text-light text-sml mb-0">
-            Do not miss the current offers until the end of March.
-        </p>
-    </div>
-</div>
+              <div className="d-flex align-items-center mt-4">
+                <div className="info">
+                  <h3 className="mb-0 hd">featured products</h3>
+                  <p className="text-light text-sml mb-0">
+                    Do not miss the current offers until the end of March.
+                  </p>
+                </div>
+              </div>
 
 
               {featuredProducts?.length === 0 && (
@@ -308,11 +298,8 @@ const Home = () => {
               </div>
             </div>
           </div>
+        </div>
       </section>
-{/*       <div>
-      <BottomNav/>
-      </div>
- */}
     </>
   );
 };

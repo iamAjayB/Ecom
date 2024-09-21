@@ -11,8 +11,8 @@ const HomeBanner = (props) => {
     const context = useContext(MyContext);
 
     return (
-        <div className=" mt-2 p-2">
-            <div  className="homeBannerSection">
+        <div className="mt-3">
+            <div className="homeBannerSection">
                 <Swiper
                     slidesPerView={1}
                     spaceBetween={15}

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../assets/images/logo.jpg';
+import Logo from '../../assets/images/logo2.png';
 import Button from '@mui/material/Button';
 import CountryDropdown from '../CountryDropdown';
 import { FiUser } from "react-icons/fi";
@@ -90,9 +90,9 @@ const Header = () => {
 
     return (
         <>
-            <div className='headerWrapperFixed' ref={headerRef} style={{position:'fixed',top:0}}>
+            <div className='headerWrapperFixed' ref={headerRef}>
                 <div className="headerWrapper">
-                
+                   
                     <header className="header">
                         <div className="container">
                             <div className="row">

@@ -9,7 +9,7 @@ import { MdOutlineCompareArrows } from "react-icons/md";
 import Tooltip from "@mui/material/Tooltip";
 import RelatedProducts from "./RelatedProducts";
 import { useNavigate } from 'react-router-dom';
-
+import LetterPullup from "@/components/magicui/letter-pullup";
 import { useParams } from "react-router-dom";
 import { fetchDataFromApi, postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -367,7 +367,7 @@ const ProductDetails = () => {
 
                   <div className="d-flex align-items-center btnActions">
                     <Button
-                      className="btn-blue btn-lg btn-big btn-round bg-red"
+                      className="btn-blue btn-lg btn-big btn-round"
                       onClick={() => addtoCart()}
                     >
                       <BsCartFill /> &nbsp;
