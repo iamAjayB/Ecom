@@ -1,0 +1,30 @@
+.slide .card {
+    width: 100%;
+    height: 150px;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .custom-nav-button {
+    background-color: #fff; /* Background color */
+    border: none; /* Remove border */
+    padding: 10px; /* Add padding */
+    cursor: pointer; /* Change cursor on hover */
+    position: absolute; /* Positioning */
+    top: 40%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust position */
+  }
+  
+  .custom-nav-button:first-of-type {
+    left: 10px; /* Position left button */
+  }
+  
+  .custom-nav-button:last-of-type {
+    right: 10px; /* Position right button */
+  }
+  
+  
+
+  
